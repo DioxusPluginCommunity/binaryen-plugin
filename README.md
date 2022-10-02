@@ -1,2 +1,3 @@
-# dioxus-binaryen-plugin
-Binaryen optimize plugin for Dioxus CLI
+# hello-dioxus-plugin
+
+Dioxus Plugin Simple Demo
