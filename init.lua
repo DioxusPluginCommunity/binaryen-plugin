@@ -9,6 +9,7 @@ local os = plugin.os
 local network = plugin.network
 local dirs = plugin.dirs
 local path = plugin.path
+local fs = plugin.fs
 
 -- plugin information
 manager.name = "Dioxus Binaryen"
@@ -32,6 +33,12 @@ manager.on_init = function ()
     )
     if not status then
         log.error("binaryen package download failed.")
+        return false
+    end
+    
+    local untar = fs.untar_gz_file(temp_name, dirs.bin_dir())
+    if not untar then
+        log.error("binaryen package install (unpackage) failed.")
         return false
     end
 
