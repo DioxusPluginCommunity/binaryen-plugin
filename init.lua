@@ -20,6 +20,8 @@ manager.version = "0.0.1"
 -- init manager plugin api
 plugin.init(manager)
 
+local config = plugin.get_config()
+
 manager.on_init = function ()
     log.info("[Binaryen] First time run, start to download binaryen file.")
     local platform = os.current_platform()
