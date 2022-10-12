@@ -12,7 +12,7 @@ local path = plugin.path
 local fs = plugin.fs
 
 -- plugin information
-manager.name = "Dioxus Binaryen"
+manager.name = "dioxus-binaryen"
 manager.repository = "https://github.com/mrxiaozhuox/dioxus-binaryen-plugin"
 manager.author = "YuKun Liu <mrxzx.info@gmail.com>"
 manager.version = "0.0.1"
@@ -22,7 +22,7 @@ plugin.init(manager)
 
 local config = plugin.get_config()
 
-manager.on_init = function ()
+manager.on_init = function()
     log.info("[Binaryen] First time run, start to download binaryen file.")
     local platform = os.current_platform()
 
@@ -37,7 +37,7 @@ manager.on_init = function ()
         log.error("binaryen package download failed.")
         return false
     end
-    
+
     local untar = fs.untar_gz_file(temp_name, dirs.bin_dir())
     if not untar then
         log.error("binaryen package install (unpackage) failed.")
@@ -48,31 +48,32 @@ manager.on_init = function ()
 end
 
 ---@param info BuildInfo
-manager.build.on_start = function (info)
+manager.build.on_start = function(info)
     -- before the build work start, system will execute this function.
     log.info("[plugin] Build starting: " .. info.name)
+    log.info("[plugin] Config information: " .. plugin.tool.dump(config))
 end
 
 ---@param info BuildInfo
-manager.build.on_finish = function (info)
+manager.build.on_finish = function(info)
     -- when the build work is done, system will execute this function.
     log.info("[plugin] Build finished: " .. info.name)
 end
 
 ---@param info ServeStartInfo
-manager.serve.on_start = function (info)
+manager.serve.on_start = function(info)
     -- this function will after clean & print to run, so you can print some thing.
     log.info("[plugin] Serve start: " .. info.name)
 end
 
 ---@param info ServeRebuildInfo
-manager.serve.on_rebuild = function (info)
+manager.serve.on_rebuild = function(info)
     -- this function will after clean & print to run, so you can print some thing.
     local files = plugin.tool.dump(info.changed_files)
     log.info("[plugin] Serve rebuild: '" .. files .. "'")
 end
 
-manager.serve.on_shutdown = function ()
+manager.serve.on_shutdown = function()
     log.info("[plugin] Serve shutdown")
 end
 
