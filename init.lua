@@ -49,16 +49,10 @@ manager.on_init = function()
 end
 
 ---@param info BuildInfo
-manager.build.on_start = function(info)
-    -- before the build work start, system will execute this function.
-    log.info("[plugin] Build starting: " .. info.name)
-end
+manager.build.on_start = function(info) end
 
 ---@param info BuildInfo
 manager.build.on_finish = function(info)
-    -- when the build work is done, system will execute this function.
-    log.info("[plugin] Build finished: " .. info.name)
-
     local optimize = config["optimize"]
     if not optimize then
         return
@@ -85,15 +79,9 @@ manager.serve.on_start = function(info)
 end
 
 ---@param info ServeRebuildInfo
-manager.serve.on_rebuild = function(info)
-    -- this function will after clean & print to run, so you can print some thing.
-    local files = plugin.tool.dump(info.changed_files)
-    log.info("[plugin] Serve rebuild: '" .. files .. "'")
-end
+manager.serve.on_rebuild = function(info) end
 
-manager.serve.on_shutdown = function()
-    log.info("[plugin] Serve shutdown")
-end
+manager.serve.on_shutdown = function() end
 
 manager.serve.interval = 1000
 
