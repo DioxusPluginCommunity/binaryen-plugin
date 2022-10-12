@@ -10,6 +10,7 @@ local network = plugin.network
 local dirs = plugin.dirs
 local path = plugin.path
 local fs = plugin.fs
+local command = plugin.command
 
 -- plugin information
 manager.name = "dioxus-binaryen"
@@ -51,13 +52,30 @@ end
 manager.build.on_start = function(info)
     -- before the build work start, system will execute this function.
     log.info("[plugin] Build starting: " .. info.name)
-    log.info("[plugin] Config information: " .. plugin.tool.dump(config))
 end
 
 ---@param info BuildInfo
 manager.build.on_finish = function(info)
     -- when the build work is done, system will execute this function.
     log.info("[plugin] Build finished: " .. info.name)
+
+    local optimize = config["optimize"]
+    if not optimize then
+        return
+    end
+
+    local command_file = path.join(path.join(path.join(dirs.bin_dir(), "binaryen-version_110"), "bin"), "wasm-opt")
+    local file_name = path.join(path.join(path.join(info.out_dir, "assets"), "dioxus"), info.name .. "_bg.wasm")
+    if path.is_file(file_name) then
+        command.exec({
+            command_file,
+            file_name,
+            "-o",
+            file_name,
+        }, "inhert", "inhert")
+    else
+        log.info("File not found")
+    end
 end
 
 ---@param info ServeStartInfo
