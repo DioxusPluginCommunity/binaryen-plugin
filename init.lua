@@ -1,5 +1,4 @@
--- package.path = library_dir .. "/?.lua"
-package.path = "/Users/mrxzx/Development/DioxusLabs/plugin-dev/plugin-library/library/?.lua"
+package.path = library_dir .. "/?.lua"
 
 local plugin = require("plugin")
 local manager = require("manager")
