@@ -26,11 +26,11 @@ manager.on_init = function()
     log.info("[Binaryen] First time run, start to download binaryen file.")
     local platform = os.current_platform()
 
-    local file_name = "binaryen-version_110-x86_64-" .. platform .. ".tar.gz"
+    local file_name = "binaryen-version_113-x86_64-" .. platform .. ".tar.gz"
     local temp_name = path.join(dirs.temp_dir(), "binaryen.tar.gz")
 
     local status = network.download_file(
-        "https://github.com/WebAssembly/binaryen/releases/download/version_110/" .. file_name,
+        "https://github.com/WebAssembly/binaryen/releases/download/version_113/" .. file_name,
         temp_name
     )
     if not status then
@@ -57,7 +57,7 @@ manager.build.on_finish = function(info)
         return
     end
 
-    local command_file = path.join(path.join(path.join(dirs.bin_dir(), "binaryen-version_110"), "bin"), "wasm-opt")
+    local command_file = path.join(path.join(path.join(dirs.bin_dir(), "binaryen-version_113"), "bin"), "wasm-opt")
     local file_name = path.join(path.join(path.join(info.out_dir, "assets"), "dioxus"), info.name .. "_bg.wasm")
     if path.is_file(file_name) then
         command.exec({
